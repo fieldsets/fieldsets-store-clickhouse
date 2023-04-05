@@ -29,6 +29,7 @@ services:
             POSTGRES_VERSION: ${POSTGRES_VERSION:-15}
             DEBUG_MODE: ${DEBUG_MODE:-true}
             LOGGING_ENABLED: ${LOGGING_ENABLED:-false}
+            FIELDSETS_LOCAL_HOST: ${FIELDSETS_LOCAL_HOST:-172.28.0.6}
         ulimits:
             nofile:
                 soft: 262144
@@ -39,6 +40,7 @@ services:
             - ${CLICKHOUSE_CONFIG_PATH:-./}named_collection.xml:/etc/clickhouse-server/config.d/named_collection.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}functions:/etc/clickhouse-server/functions
             - ${CLICKHOUSE_CONFIG_PATH:-./}initdb:/docker-entrypoint-initdb.d
+            - ${FIELDSETS_PLUGINS_PATH:-./plugins}:/fieldsets-plugins
             - clickhouse-data:/var/lib/clickhouse
             - clickhouse-logs:/var/log/clickhouse-server
         ports:
@@ -49,7 +51,7 @@ services:
         logging:
             driver: fluentd
             options:
-                fluentd-address: ${EVENT_LOGGER_HOST:-172.28.0.2}:${EVENT_LOGGER_PORT:-24224}
+                fluentd-address: ${LOGGER_HOST:-172.28.0.2}:${LOGGER_PORT:-24224}
                 tag: debug_log.clickhouse
                 fluentd-async: "true"
                 env: "PGOPTIONS='-c search_path=pipeline',LOGGING_ENABLED='${LOGGING_ENABLED:-false}'"
@@ -69,4 +71,4 @@ networks:
         attachable: true
         ipam:
             config:
-            - subnet: ${FIELDSETS_LOCAL_NETWORK_SUBNET:-172.28.0.0/24}
+            - subnet: ${FIELDSETS_NETWORK_SUBNET:-172.28.0.0/24}

@@ -46,7 +46,7 @@
     <!-- It is the name that will be shown in the clickhouse-client.
          By default, anything with "production" will be highlighted in red in query prompt.
     -->
-    <display_name>fieldsets-local</display_name>
+    <display_name>fieldsets-clickhouse</display_name>
     
     <http_port>8123</http_port>
     <tcp_port>9000</tcp_port>
@@ -205,7 +205,7 @@
          Please note, that server could display time zone alias instead of specified name.
          Example: W-SU is an alias for Europe/Moscow and Zulu is an alias for UTC.
     -->
-    <!-- <timezone>Europe/Moscow</timezone> -->
+    <timezone from_env="TIMEZONE" />
 
     <!-- You can specify umask here (see "man umask"). Server will apply it on startup.
          Number is always parsed as octal. Default umask is 027 (other users cannot read logs, data files, etc; group can only read).
@@ -215,7 +215,8 @@
     <mlock_executable>true</mlock_executable>
     <remap_executable>false</remap_executable>
 
-    <listen_host>0.0.0.0</listen_host>
+    <listen_host from_env="CLICKHOUSE_HOST"/>
+    <!--<listen_host>0.0.0.0</listen_host>-->
     <!--<listen_try>0</listen_try>-->
     
     <!-- <remote_servers>
@@ -233,8 +234,7 @@
 
     <remote_url_allow_hosts>
         <host>localhost</host>
-        <host>172.28.0.3</host>
-        <host>172.28.0.6</host>
+        <host from_env="FIELDSETS_LOCAL_HOST"/>
         <host from_env="POSTGRES_HOST"/>
         <host>0.0.0.0</host>
     </remote_url_allow_hosts>
@@ -250,12 +250,12 @@
          See https://clickhouse.tech/docs/en/engines/table-engines/mergetree-family/replication/
       -->
 
-    <zookeeper>
+    <!--<zookeeper>
         <node>
             <host>172.28.0.2</host>
             <port>2181</port>
         </node>
-    </zookeeper>
+    </zookeeper>-->
 
     <!-- 
     <jdbc_bridge>

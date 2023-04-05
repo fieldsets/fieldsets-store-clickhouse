@@ -41,6 +41,8 @@
             <password from_env="CLICKHOUSE_PASSWORD"/>
             <networks incl="networks" replace="replace">
                 <ip>0.0.0.0</ip>
+                <ip>127.0.0.1</ip>
+                <ip from_env="CLICKHOUSE_HOST"/>
             </networks>
 
             <!-- Settings profile for user. -->
