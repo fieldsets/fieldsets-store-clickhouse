@@ -9,6 +9,7 @@ services:
                 TIMEZONE: ${TIMEZONE:-America/New_York}
                 CLICKHOUSE_VERSION: ${CLICKHOUSE_VERSION:-23}
                 POSTGRES_VERSION: ${POSTGRES_VERSION:-15}
+                BUILD_CONTEXT_PATH: ${CLICKHOUSE_CONFIG_PATH:-./}
         container_name: fieldsets-clickhouse
         hostname: fieldsets-clickhouse
         environment:

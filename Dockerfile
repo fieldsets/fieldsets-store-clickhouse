@@ -7,6 +7,10 @@ ARG POSTGRES_VERSION
 ARG TIMEZONE
 ENV TZ=${TIMEZONE}
 
+# If the certs directory exists, copy the certs and utilize them.
+ARG BUILD_CONTEXT_PATH
+COPY ${BUILD_CONTEXT_PATH}/cert[s]/* /tmp/certs/
+
 # Install necessary packges
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
     apt-get update && \
@@ -33,9 +37,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
         dnsutils \
         zip \
         unzip && \
+    cp /tmp/certs/* /usr/local/share/ca-certificates/ && \
+    cp /tmp/certs/* /etc/ssl/certs/ && \
+    update-ca-certificates --fresh && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null && \
     sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main' > /etc/apt/sources.list.d/pgdg.list" && \
-    update-ca-certificates && \
     apt-get -y update && \
     apt-get install -y --no-install-recommends \
         postgresql-client-${POSTGRES_VERSION} && \
@@ -48,4 +54,3 @@ EXPOSE 9009
 # Clickhouse ODBC & JDBC Port
 EXPOSE 9018
 EXPOSE 9019
-
