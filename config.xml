@@ -47,7 +47,7 @@
          By default, anything with "production" will be highlighted in red in query prompt.
     -->
     <display_name>fieldsets-clickhouse</display_name>
-    
+
     <http_port>8123</http_port>
     <tcp_port>9000</tcp_port>
 
@@ -127,7 +127,7 @@
     -->
 
     <!-- Maximum number of concurrent queries. -->
-    <max_concurrent_queries>100</max_concurrent_queries>    
+    <max_concurrent_queries>100</max_concurrent_queries>
     <max_server_memory_usage>0</max_server_memory_usage>
 
     <max_thread_pool_size>10000</max_thread_pool_size>
@@ -142,7 +142,7 @@
       -->
     <total_memory_profiler_step>4194304</total_memory_profiler_step>
     <total_memory_tracker_sample_probability>0</total_memory_tracker_sample_probability>
-    
+
     <uncompressed_cache_size>8589934592</uncompressed_cache_size>
 
     <!-- Approximate size of mark cache, used in tables of MergeTree family.
@@ -215,10 +215,13 @@
     <mlock_executable>true</mlock_executable>
     <remap_executable>false</remap_executable>
 
-    <listen_host from_env="CLICKHOUSE_HOST"/>
-    <!--<listen_host>0.0.0.0</listen_host>-->
-    <!--<listen_try>0</listen_try>-->
-    
+    <listen_host>::</listen_host>
+
+    <!--<listen_host from_env="CLICKHOUSE_HOST"/>
+    <listen_host>127.0.0.1</listen_host>
+    <listen_host>0.0.0.0</listen_host>-->
+    <listen_try>1</listen_try>
+
     <!-- <remote_servers>
         <default_cluster>
             <shard>
@@ -233,7 +236,7 @@
     </remote_servers> -->
 
     <remote_url_allow_hosts>
-        <host>localhost</host>
+        <host>127.0.0.1</host>
         <host from_env="FIELDSETS_LOCAL_HOST"/>
         <host from_env="POSTGRES_HOST"/>
         <host>0.0.0.0</host>
@@ -257,7 +260,7 @@
         </node>
     </zookeeper>-->
 
-    <!-- 
+    <!--
     <jdbc_bridge>
         <host>172.28.0.5</host>
         <port>9019</port>

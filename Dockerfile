@@ -9,7 +9,7 @@ ENV TZ=${TIMEZONE}
 
 # If the certs directory exists, copy the certs and utilize them.
 ARG BUILD_CONTEXT_PATH
-COPY ${BUILD_CONTEXT_PATH}/cert[s]/* /tmp/certs/
+COPY ${BUILD_CONTEXT_PATH}cert[s]/* /tmp/certs/
 
 # Install necessary packges
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
@@ -46,6 +46,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     apt-get install -y --no-install-recommends \
         postgresql-client-${POSTGRES_VERSION} && \
     apt-get clean
+
+EXPOSE 8123
+EXPOSE 9440
 
 # Clickhouse interserver port
 EXPOSE 9000

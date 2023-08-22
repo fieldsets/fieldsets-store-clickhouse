@@ -14,7 +14,7 @@
 
             <query_profiler_real_time_period_ns>0</query_profiler_real_time_period_ns>
             <query_profiler_cpu_time_period_ns>0</query_profiler_cpu_time_period_ns>
-            
+
             <!-- How to choose between replicas during distributed query processing.
                  random - choose random replica from set of replicas with minimum number of errors
                  nearest_hostname - from set of replicas with minimum number of errors, choose replica
@@ -33,7 +33,7 @@
     </profiles>
 
     <!-- Users and ACL. -->
-    <users>    
+    <users>
         <!-- If user name was not specified, 'default' user is used. -->
         <default>
             <!-- User can create other users and grant rights to them. -->
@@ -50,7 +50,7 @@
 
             <!-- Quota for user. -->
             <quota>default</quota>
-        </default>        
+        </default>
     </users>
 
     <!-- Quotas. -->
