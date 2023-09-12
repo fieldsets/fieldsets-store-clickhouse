@@ -2,6 +2,11 @@
 *.env
 ./docker-compose.override.yml
 
+*.crt
+*.pem
+*_rsa
+id_rsa
+
 ./src/*
 ./src
 
