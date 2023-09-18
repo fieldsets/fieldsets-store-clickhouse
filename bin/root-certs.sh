@@ -30,10 +30,10 @@ manage() {
     local f
     local certcount
     if [[ -e ${CERTS_DIR} ]]; then
-        certcount=$(ls -1q ${CERTS_DIR}/*.crt | wc -l);
-        if [[ certcount -eq 1 ]]; then
+        certcount=$(echo "$(ls -1q ${CERTS_DIR}/*.crt 2>/dev/null | wc -l)")
+        if [[ ${certcount} -eq 1 ]]; then
             mkdir -p /root/.certs
-            for f in ${CERTS_DIR}*.crt; do
+            for f in ${CERTS_DIR}/*.crt; do
                 if [ -f "${f}" ]; then
                     echo "Installing Root Certificate: ${f}"
                     cp "$f" "/root/.certs/ca-certificate.crt"
@@ -46,10 +46,11 @@ manage() {
                     echo "ca_certificate=/root/.certs/ca-certificate.pem" >> /root/.wgetrc
                     echo "cacert=/root/.certs/ca-certificate.pem" >> /root/.curlrc
                     update-ca-certificates --fresh
+                    pip3 config set global.cert /root/.certs
                     git config --global http.sslcainfo /root/.certs/ca-certificate.pem
                 fi
             done
-        elif [[ certcount -gt 1 ]]; then
+        elif [[ ${certcount} -gt 1 ]]; then
             echo "The directory contains more than 1 root certificate. Please Bundle them."
             return 1
         else
