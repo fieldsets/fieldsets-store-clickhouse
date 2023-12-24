@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-    fieldsets-clickhouse:
+    fieldsets-store:
         image: ${CONTAINER_REGISTRY:-fieldsets}/docker-clickhouse:${VERSION:-latest}
         build:
             context: ./
@@ -10,8 +10,8 @@ services:
                 CLICKHOUSE_VERSION: ${CLICKHOUSE_VERSION:-23}
                 POSTGRES_VERSION: ${POSTGRES_VERSION:-15}
                 BUILD_CONTEXT_PATH: ${CLICKHOUSE_CONFIG_PATH:-./}
-        container_name: fieldsets-clickhouse
-        hostname: fieldsets-clickhouse
+        container_name: fieldsets-store
+        hostname: fieldsets-store
         environment:
             ENVIRONMENT: ${ENVIROMENT:-dev-local}
             VERSION: ${VERSION:-latest}
@@ -47,30 +47,11 @@ services:
             - clickhouse-logs:/var/log/clickhouse-server
         ports:
             - ${CLICKHOUSE_PORT:-8123}:${CLICKHOUSE_PORT:-8123}
-        networks:
-            default:
-                ipv4_address: ${CLICKHOUSE_HOST:-172.28.0.5}
-        logging:
-            driver: fluentd
-            options:
-                fluentd-address: ${LOGGER_HOST:-172.28.0.2}:${LOGGER_PORT:-24224}
-                tag: debug_log.clickhouse
-                fluentd-async: "true"
-                env: "PGOPTIONS='-c search_path=pipeline',LOGGING_ENABLED='${LOGGING_ENABLED:-false}'"
 
 volumes:
     clickhouse-data:
         driver: local
-        name: fieldsets-clickhouse-data
+        name: fieldsets-store-data
     clickhouse-logs:
         driver: local
-        name: fieldsets-clickhouse-logs
-
-networks:
-    default:
-        driver: bridge
-        name: fieldsets_network
-        attachable: true
-        ipam:
-            config:
-            - subnet: ${FIELDSETS_NETWORK_SUBNET:-172.28.0.0/24}
+        name: fieldsets-store-logs
