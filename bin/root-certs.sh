@@ -46,7 +46,6 @@ manage() {
                     echo "ca_certificate=/root/.certs/ca-certificate.pem" >> /root/.wgetrc
                     echo "cacert=/root/.certs/ca-certificate.pem" >> /root/.curlrc
                     update-ca-certificates --fresh
-                    pip3 config set global.cert /root/.certs
                     git config --global http.sslcainfo /root/.certs/ca-certificate.pem
                 fi
             done
