@@ -46,7 +46,7 @@
     <!-- It is the name that will be shown in the clickhouse-client.
          By default, anything with "production" will be highlighted in red in query prompt.
     -->
-    <display_name>fieldsets-clickhouse</display_name>
+    <display_name>fieldsets-store</display_name>
 
     <http_port>8123</http_port>
     <tcp_port>9000</tcp_port>

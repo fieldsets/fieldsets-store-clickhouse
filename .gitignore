@@ -2,6 +2,11 @@
 *.env
 ./docker-compose.override.yml
 
+*.crt
+*.pem
+*_rsa
+id_rsa
+
 ./src/*
 ./src
 
@@ -10,6 +15,7 @@
 
 ./certs/*
 !./certs
+!./certs/README.md
 
 # Editor output
 .vscode/
