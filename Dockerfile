@@ -19,6 +19,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
         curl \
         coreutils \
         wget \
+        apt-transport-https \
+        software-properties-common \
         ca-certificates \
         gnupg \
         build-essential \
@@ -36,8 +38,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
         libc-dev \
         g++ \
         dnsutils \
+        net-tools \
+        openssh-client \
         zip \
-        unzip 
+        unzip
 
     # Break cert management into its own layer as it is dependent on presence or absence of a cert
     RUN bash /root/.local/bin/root-certs.sh /tmp/certs
