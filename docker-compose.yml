@@ -41,8 +41,8 @@ services:
             - ${CLICKHOUSE_CONFIG_PATH:-./}named_collection.xml:/etc/clickhouse-server/config.d/named_collection.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}functions/:/etc/clickhouse-server/functions/
             - ${CLICKHOUSE_CONFIG_PATH:-./}initdb/:/docker-entrypoint-initdb.d/
-            - ${FIELDSETS_PLUGINS_PATH:-./plugins/}:/fieldsets-plugins/
-            - ${FIELDSETS_DATA_PATH:-./data/}:/fieldsets-data/
+            - ${FIELDSETS_PATH:-./}plugins/:/fieldsets-plugins/
+            - ${FIELDSETS_PATH:-./}data/:/fieldsets-data/
             - clickhouse-data:/var/lib/clickhouse
             - clickhouse-logs:/var/log/clickhouse-server
         ports:
