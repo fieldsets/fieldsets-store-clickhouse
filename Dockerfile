@@ -26,6 +26,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
         build-essential \
         lsb-release \
         git \
+        procps \
         cmake \
         libpoco-dev \
         libssl-dev \
@@ -55,7 +56,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
         fluent-bit \
         pgdg-keyring \
         postgresql-client-${POSTGRES_VERSION} && \
-    apt-get clean && \
+    apt-get autoremove -y && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/* && \
     ln -s /opt/fluent-bit/bin/fluent-bit /usr/local/bin/fluent-bit
 
 EXPOSE 8123
