@@ -28,8 +28,8 @@ services:
             POSTGRES_DB: ${POSTGRES_DB:-fieldsets}
             POSTGRES_PORT: ${POSTGRES_PORT:-5432}
             POSTGRES_VERSION: ${POSTGRES_VERSION:-15}
-            DEBUG_MODE: ${DEBUG_MODE:-true}
-            LOGGING_ENABLED: ${LOGGING_ENABLED:-false}
+            ENABLE_DEBUG_MODE: ${ENABLE_DEBUG_MODE:-true}
+            ENABLE_LOGGING: ${ENABLE_LOGGING:-false}
             FIELDSETS_LOCAL_HOST: ${FIELDSETS_LOCAL_HOST:-172.28.0.6}
         ulimits:
             nofile:
