@@ -6,7 +6,7 @@ set -e
 # This is the spot where you want to manage creating users, defining custom functions, tables views and anything else 
 # that would need to be defined before the core data architecture is built.
 ###
-clickhouse-client --host 127.0.0.1 --user $CLICKHOUSE_USER --password $CLICKHOUSE_PASSWORD --database system -n <<-EOSQL
+clickhouse-client --host $CLICKHOUSE_HOST --user $CLICKHOUSE_USER --password $CLICKHOUSE_PASSWORD --database system -n <<-EOSQL
     CREATE DATABASE IF NOT EXISTS $CLICKHOUSE_DB;
 
     CREATE DATABASE IF NOT EXISTS postgres

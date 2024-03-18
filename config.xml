@@ -176,8 +176,8 @@
     </user_directories>
 
     <!-- Default profile of settings. -->
-    <default_profile>default</default_profile>
-
+    <default_profile >default</default_profile>
+    
     <!-- Comma-separated list of prefixes for user-defined settings. -->
     <custom_settings_prefixes>clickhouse_,postgres_,fieldsets_</custom_settings_prefixes>
 
@@ -191,7 +191,8 @@
     <!-- <buffer_profile>default</buffer_profile> -->
 
     <!-- Default database. -->
-    <default_database>default</default_database>
+    <!--<default_database>default</default_database>-->
+    <default_database from_env="CLICKHOUSE_DB"/>
 
     <!-- Server time zone could be set here.
 
@@ -237,6 +238,7 @@
 
     <remote_url_allow_hosts>
         <host>127.0.0.1</host>
+        <host from_env="CLICKHOUSE_HOST"/>
         <host from_env="FIELDSETS_LOCAL_HOST"/>
         <host from_env="POSTGRES_HOST"/>
         <host>0.0.0.0</host>
