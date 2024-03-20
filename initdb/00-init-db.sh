@@ -3,7 +3,7 @@ set -e
 
 ###
 # Execute arbitrary SQL here for clickhouse initialization.
-# This is the spot where you want to manage creating users, defining custom functions, tables views and anything else 
+# This is the spot where you want to manage creating users, defining custom functions, tables views and anything else
 # that would need to be defined before the core data architecture is built.
 ###
 clickhouse-client --host $CLICKHOUSE_HOST --user $CLICKHOUSE_USER --password $CLICKHOUSE_PASSWORD --database system -n <<-EOSQL

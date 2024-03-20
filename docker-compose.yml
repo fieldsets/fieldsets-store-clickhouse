@@ -18,6 +18,7 @@ services:
             TIMEZONE: ${TIMEZONE:-America/New_York}
             CLICKHOUSE_UID: ${LOCAL_UID:-1000}
             CLICKHOUSE_GID: ${LOCAL_GID:-1000}
+            CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
             CLICKHOUSE_HOST: ${CLICKHOUSE_HOST:-172.28.0.5}
             CLICKHOUSE_USER: ${CLICKHOUSE_USER:-default}
             CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-fieldsets}
@@ -41,6 +42,7 @@ services:
             - ${CLICKHOUSE_CONFIG_PATH:-./}named_collection.xml:/etc/clickhouse-server/config.d/named_collection.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}functions/:/etc/clickhouse-server/functions/
             - ${CLICKHOUSE_CONFIG_PATH:-./}initdb/:/docker-entrypoint-initdb.d/
+            - ${CLICKHOUSE_CONFIG_PATH:-./}sql/:/fieldsets-sql/
             - ${FIELDSETS_PATH:-./}plugins/:/fieldsets-plugins/
             - ${FIELDSETS_PATH:-./}data/:/fieldsets-data/
             - clickhouse-data:/var/lib/clickhouse
