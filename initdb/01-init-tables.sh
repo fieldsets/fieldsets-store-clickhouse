@@ -17,7 +17,6 @@ export PRIORITY=01
 # init: execute our sql
 ##
 init() {
-    log "Creating tables...."
     local f
     for f in /fieldsets-sql/tables/*.sql; do
         clickhouse-client --host ${CLICKHOUSE_HOST} --user ${CLICKHOUSE_USER} --password ${CLICKHOUSE_PASSWORD} --database ${CLICKHOUSE_DB} -nm --queries-file ${f}
