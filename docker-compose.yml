@@ -7,7 +7,7 @@ services:
             dockerfile: ${CLICKHOUSE_CONFIG_PATH:-./}Dockerfile
             args:
                 TIMEZONE: ${TIMEZONE:-America/New_York}
-                CLICKHOUSE_VERSION: ${CLICKHOUSE_VERSION:-23}
+                CLICKHOUSE_VERSION: ${CLICKHOUSE_VERSION:-24}
                 POSTGRES_VERSION: ${POSTGRES_VERSION:-15}
                 BUILD_CONTEXT_PATH: ${CLICKHOUSE_CONFIG_PATH:-./}
         container_name: fieldsets-store
@@ -18,6 +18,8 @@ services:
             TIMEZONE: ${TIMEZONE:-America/New_York}
             CLICKHOUSE_UID: ${LOCAL_UID:-1000}
             CLICKHOUSE_GID: ${LOCAL_GID:-1000}
+            CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+            CLICKHOUSE_ALWAYS_RUN_INITDB_SCRIPTS: 1
             CLICKHOUSE_HOST: ${CLICKHOUSE_HOST:-172.28.0.5}
             CLICKHOUSE_USER: ${CLICKHOUSE_USER:-default}
             CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-fieldsets}
@@ -28,8 +30,8 @@ services:
             POSTGRES_DB: ${POSTGRES_DB:-fieldsets}
             POSTGRES_PORT: ${POSTGRES_PORT:-5432}
             POSTGRES_VERSION: ${POSTGRES_VERSION:-15}
-            DEBUG_MODE: ${DEBUG_MODE:-true}
-            LOGGING_ENABLED: ${LOGGING_ENABLED:-false}
+            ENABLE_DEBUG_MODE: ${ENABLE_DEBUG_MODE:-true}
+            ENABLE_LOGGING: ${ENABLE_LOGGING:-false}
             FIELDSETS_LOCAL_HOST: ${FIELDSETS_LOCAL_HOST:-172.28.0.6}
         ulimits:
             nofile:
@@ -41,6 +43,7 @@ services:
             - ${CLICKHOUSE_CONFIG_PATH:-./}named_collection.xml:/etc/clickhouse-server/config.d/named_collection.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}functions/:/etc/clickhouse-server/functions/
             - ${CLICKHOUSE_CONFIG_PATH:-./}initdb/:/docker-entrypoint-initdb.d/
+            - ${CLICKHOUSE_CONFIG_PATH:-./}sql/:/fieldsets-sql/
             - ${FIELDSETS_PATH:-./}plugins/:/fieldsets-plugins/
             - ${FIELDSETS_PATH:-./}data/:/fieldsets-data/
             - clickhouse-data:/var/lib/clickhouse
