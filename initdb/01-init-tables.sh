@@ -18,7 +18,7 @@ export PRIORITY=01
 ##
 init() {
     local f
-    for f in /fieldsets-sql/tables/*.sql; do
+    for f in /usr/local/fieldsets/sql/tables/*.sql; do
         clickhouse-client --host 0.0.0.0 --user ${CLICKHOUSE_USER} --password ${CLICKHOUSE_PASSWORD} --database ${CLICKHOUSE_DB} -nm --queries-file ${f}
     done
 }
