@@ -1,74 +1,22 @@
 <?xml version="1.0"?>
 <clickhouse>
-    <!-- Profiles of settings. -->
-    <profiles>
-        <!-- Default settings. -->
-        <default>
-            <!-- Maximum memory usage for processing single query, in bytes. -->
-            <max_memory_usage>10000000000</max_memory_usage>
-
-            <max_partitions_per_insert_block>1000</max_partitions_per_insert_block>
-
-            <!-- Use cache of uncompressed blocks of data. Meaningful only for processing many of very short queries. -->
-            <use_uncompressed_cache>0</use_uncompressed_cache>
-
-            <query_profiler_real_time_period_ns>0</query_profiler_real_time_period_ns>
-            <query_profiler_cpu_time_period_ns>0</query_profiler_cpu_time_period_ns>
-
-            <!-- How to choose between replicas during distributed query processing.
-                 random - choose random replica from set of replicas with minimum number of errors
-                 nearest_hostname - from set of replicas with minimum number of errors, choose replica
-                  with minimum number of different symbols between replica's hostname and local hostname
-                  (Hamming distance).
-                 in_order - first live replica is chosen in specified order.
-                 first_or_random - if first replica one has higher number of errors, pick a random one from replicas with minimum number of errors.
-            -->
-            <load_balancing>random</load_balancing>
-        </default>
-
-        <!-- Profile that allows only read queries. -->
-        <readonly>
-            <readonly>1</readonly>
-        </readonly>
-    </profiles>
-
     <!-- Users and ACL. -->
     <users>
-        <!-- If user name was not specified, 'default' user is used. -->
-        <default>
+        <default replace="replace">
             <!-- User can create other users and grant rights to them. -->
             <access_management>1</access_management>
+            <named_collection_control>1</named_collection_control>
+            <named_collection_admin>1</named_collection_admin>
             <password from_env="CLICKHOUSE_PASSWORD"/>
             <networks incl="networks" replace="replace">
                 <ip>0.0.0.0</ip>
                 <ip>127.0.0.1</ip>
                 <ip from_env="CLICKHOUSE_HOST"/>
             </networks>
-
             <!-- Settings profile for user. -->
             <profile>default</profile>
-
             <!-- Quota for user. -->
             <quota>default</quota>
         </default>
     </users>
-
-    <!-- Quotas. -->
-    <quotas>
-        <!-- Name of quota. -->
-        <default>
-            <!-- Limits for time interval. You could specify many intervals with different limits. -->
-            <interval>
-                <!-- Length of interval. -->
-                <duration>3600</duration>
-
-                <!-- No limits. Just calculate resource usage for time interval. -->
-                <queries>0</queries>
-                <errors>0</errors>
-                <result_rows>0</result_rows>
-                <read_rows>0</read_rows>
-                <execution_time>0</execution_time>
-            </interval>
-        </default>
-    </quotas>
 </clickhouse>
