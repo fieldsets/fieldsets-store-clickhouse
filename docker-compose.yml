@@ -1,4 +1,3 @@
-version: '3.7'
 services:
     fieldsets-store:
         image: ${CONTAINER_REGISTRY:-fieldsets}/docker-clickhouse:${VERSION:-latest}
@@ -12,12 +11,15 @@ services:
                 BUILD_CONTEXT_PATH: ${CLICKHOUSE_CONFIG_PATH:-./}
         container_name: fieldsets-store
         hostname: fieldsets-store
+        cap_add:
+            - SYS_NICE
+            - NET_ADMIN
+            - IPC_LOCK
+        user: ${LOCAL_UID:-1000}:${LOCAL_GID:-1000}
         environment:
             ENVIRONMENT: ${ENVIROMENT:-dev-local}
             VERSION: ${VERSION:-latest}
             TIMEZONE: ${TIMEZONE:-America/New_York}
-            CLICKHOUSE_UID: ${LOCAL_UID:-1000}
-            CLICKHOUSE_GID: ${LOCAL_GID:-1000}
             CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
             CLICKHOUSE_ALWAYS_RUN_INITDB_SCRIPTS: 1
             CLICKHOUSE_HOST: ${CLICKHOUSE_HOST:-172.28.0.5}
@@ -38,6 +40,7 @@ services:
                 soft: 262144
                 hard: 262144
         volumes:
+            - ${CLICKHOUSE_CONFIG_PATH:-./}apt-preferences:/etc/preferences
             - ${CLICKHOUSE_CONFIG_PATH:-./}users.xml:/etc/clickhouse-server/users.d/fieldsets-users.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}config.xml:/etc/clickhouse-server/config.d/fieldsets-config.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}named_collection.xml:/etc/clickhouse-server/config.d/postgres_named_collection.xml
