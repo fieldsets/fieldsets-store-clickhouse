@@ -43,20 +43,20 @@ services:
             - ${CLICKHOUSE_CONFIG_PATH:-./}apt-preferences:/etc/preferences
             - ${CLICKHOUSE_CONFIG_PATH:-./}users.xml:/etc/clickhouse-server/users.d/fieldsets-users.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}config.xml:/etc/clickhouse-server/config.d/fieldsets-config.xml
-            - ${CLICKHOUSE_CONFIG_PATH:-./}named_collection.xml:/etc/clickhouse-server/config.d/postgres_named_collection.xml
+            - ${CLICKHOUSE_CONFIG_PATH:-./}named_collection.xml:/etc/clickhouse-server/config.d/db_named_collection.xml
             - ${CLICKHOUSE_CONFIG_PATH:-./}initdb/:/docker-entrypoint-initdb.d/
             - ${CLICKHOUSE_CONFIG_PATH:-./}sql/:/usr/local/fieldsets/sql/
             - ${CLICKHOUSE_CONFIG_PATH:-./}plugins/:/usr/local/fieldsets/plugins/
             - ${CLICKHOUSE_CONFIG_PATH:-./}data/:/usr/local/fieldsets/data/
-            - clickhouse-data:/var/lib/clickhouse
-            - clickhouse-logs:/var/log/clickhouse-server
+            - store-data:/var/lib/clickhouse
+            - store-logs:/var/log/clickhouse-server
         ports:
             - ${CLICKHOUSE_PORT:-8123}:${CLICKHOUSE_PORT:-8123}
 
 volumes:
-    clickhouse-data:
+    store-data:
         driver: local
         name: fieldsets-store-data
-    clickhouse-logs:
+    store-logs:
         driver: local
         name: fieldsets-store-logs
