@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <clickhouse>
     <named_collections>
-        <postgres_connection>
-            <host overridable="false" from_env="POSTGRES_HOST"/>
-            <port overridable="false" from_env="POSTGRES_PORT"/>
-            <user overridable="false" from_env="POSTGRES_USER"/>
-            <password overridable="false" from_env="POSTGRES_PASSWORD"/>
-            <database overridable="false" from_env="POSTGRES_DB"/>
-            <schema overridable="true" from_env="POSTGRES_DB"/>
+        <fieldsets_db_connection>
+            <host overridable="false" from_env="FIELDSETS_DB_HOST"/>
+            <port overridable="false" from_env="FIELDSETS_DB_PORT"/>
+            <user overridable="false" from_env="FIELDSETS_DB_USER"/>
+            <password overridable="false" from_env="FIELDSETS_DB_PASSWORD"/>
+            <database overridable="false" from_env="FIELDSETS_DB"/>
+            <schema overridable="true" from_env="FIELDSETS_DB_NAME"/>
             <table overridable="true"></table>
-        </postgres_connection>
+        </fieldsets_db_connection>
     </named_collections>
 </clickhouse>

@@ -11,7 +11,7 @@ CREATE DICTIONARY IF NOT EXISTS fieldsets.enums (
 )
 PRIMARY KEY field_token, token
 SOURCE(PostgreSQL(
-    NAME 'postgres_connection'
+    NAME 'db_connection'
     TABLE 'enums'
     DB 'fieldsets'
 ))

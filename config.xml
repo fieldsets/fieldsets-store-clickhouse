@@ -21,7 +21,7 @@
     <default_profile replace="replace">default</default_profile>
 
     <!-- Comma-separated list of prefixes for user-defined settings. -->
-    <custom_settings_prefixes replace="replace">clickhouse_,postgres_,fieldsets_</custom_settings_prefixes>
+    <custom_settings_prefixes replace="replace">fieldsets_</custom_settings_prefixes>
     <default_database replace="replace" from_env="CLICKHOUSE_DB"/>
 
     <timezone replace="replace" from_env="TIMEZONE" />
@@ -30,9 +30,10 @@
 
     <remote_url_allow_hosts replace="replace">
         <host>127.0.0.1</host>
-        <host from_env="CLICKHOUSE_HOST"/>
+        <host from_env="FIELDSETS_STORE_HOST"/>
         <host from_env="FIELDSETS_LOCAL_HOST"/>
-        <host from_env="POSTGRES_HOST"/>
+        <host from_env="FIELDSETS_DB_HOST"/>
+        <host from_env="FIELDSETS_CACHE_HOST"/>
         <host>0.0.0.0</host>
     </remote_url_allow_hosts>
     <!-- Uncomment to disable ClickHouse internal DNS caching. -->

@@ -2,7 +2,10 @@ ARG CLICKHOUSE_VERSION
 FROM clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-24}
 
 ENV DEBIAN_FRONTEND='noninteractive'
-ARG POSTGRES_VERSION
+ARG FIELDSETS_DB
+ARG FIELDSETS_DB_VERSION
+ARG LOCAL_UID
+ARG LOCAL_GID
 
 ARG TIMEZONE
 ENV TZ=${TIMEZONE}
@@ -42,7 +45,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
         net-tools \
         openssh-client \
         zip \
-        unzip
+        unzip && \
+    groupmod -g ${LOCAL_GID:-1000} clickhouse && \
+    usermod -u ${LOCAL_UID:-1000} -g ${LOCAL_GID:-1000} clickhouse
 
     # Break cert management into its own layer as it is dependent on presence or absence of a cert
     RUN bash /root/.local/bin/root-certs.sh /tmp/certs
@@ -59,7 +64,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     apt-get install -y --no-install-recommends \
         powershell \
         fluent-bit \
-        postgresql-client-${POSTGRES_VERSION} && \
+        postgresql-client-${FIELDSETS_DB_VERSION} && \
     apt-get autoremove -y && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* && \

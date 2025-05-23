@@ -4,7 +4,7 @@ CREATE DICTIONARY IF NOT EXISTS fieldsets.tokens (
 )
 PRIMARY KEY id
 SOURCE(PostgreSQL(
-    NAME 'postgres_connection'
+    NAME 'fieldsets_db_connection'
     TABLE 'tokens'
     DB 'fieldsets'
 ))
