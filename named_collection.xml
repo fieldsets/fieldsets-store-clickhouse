@@ -7,7 +7,7 @@
             <user overridable="false" from_env="FIELDSETS_DB_USER"/>
             <password overridable="false" from_env="FIELDSETS_DB_PASSWORD"/>
             <database overridable="false" from_env="FIELDSETS_DB"/>
-            <schema overridable="true" from_env="FIELDSETS_DB_NAME"/>
+            <schema overridable="true" from_env="FIELDSETS_DB_SCHEMA"/>
             <table overridable="true"></table>
         </fieldsets_db_connection>
     </named_collections>
