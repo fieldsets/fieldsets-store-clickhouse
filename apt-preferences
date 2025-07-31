@@ -1,3 +1,7 @@
+Package: libzstd1
+Pin: release n=kinetic
+Pin-Priority: 600
+
 Package: *
 Pin: release o=apt.postgresql.org
 Pin-Priority: 500

@@ -1,11 +1,14 @@
 ARG CLICKHOUSE_VERSION
-FROM clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-24}
+FROM clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-25.6}
 
 ENV DEBIAN_FRONTEND='noninteractive'
 ARG POSTGRES_VERSION
 
 ARG TIMEZONE
 ENV TZ=${TIMEZONE}
+
+ARG LOCAL_UID
+ARG LOCAL_GID
 
 # If the certs directory exists, copy the certs and utilize them.
 ARG BUILD_CONTEXT_PATH
@@ -48,8 +51,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     RUN bash /root/.local/bin/root-certs.sh /tmp/certs
 
     RUN install -d /usr/share/postgresql-common/pgdg && \
+    echo "deb http://old-releases.ubuntu.com/ubuntu/ kinetic main restricted universe multiverse" > /etc/apt/sources.list.d/kinetic.list && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null && \
-    echo "deb [signed-by=/etc/apt/trusted.gpg.d/apt.postgresql.org.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    echo "deb [signed-by=/etc/apt/trusted.gpg.d/apt.postgresql.org.gpg] http://apt.postgresql.org/pub/repos/apt $(cat /etc/debian_version | sed 's/\/.*//g')-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     curl https://packages.fluentbit.io/fluentbit.key | gpg --dearmor | tee /usr/share/keyrings/fluentbit-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/fluentbit-keyring.gpg] https://packages.fluentbit.io/ubuntu/$(lsb_release -cs) $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/fluent-bit.list && \
     wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -P /tmp/ && \
@@ -57,6 +61,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     rm /tmp/packages-microsoft-prod.deb && \
     apt-get -y update && \
     apt-get install -y --no-install-recommends \
+        libzstd1 \
         powershell \
         fluent-bit \
         postgresql-client-${POSTGRES_VERSION} && \
@@ -64,6 +69,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* && \
     ln -s /opt/fluent-bit/bin/fluent-bit /usr/local/bin/fluent-bit
+
+    RUN usermod -u ${LOCAL_UID:-1000} clickhouse && \
+    groupmod  -g ${LOCAL_GID:-1000} clickhouse
 
 EXPOSE 8123
 EXPOSE 9440

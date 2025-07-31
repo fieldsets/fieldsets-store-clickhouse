@@ -6,9 +6,11 @@ services:
             dockerfile: ${CLICKHOUSE_CONFIG_PATH:-./}Dockerfile
             args:
                 TIMEZONE: ${TIMEZONE:-America/New_York}
-                CLICKHOUSE_VERSION: ${CLICKHOUSE_VERSION:-24}
+                CLICKHOUSE_VERSION: ${CLICKHOUSE_VERSION:-25.6}
                 POSTGRES_VERSION: ${POSTGRES_VERSION:-15}
                 BUILD_CONTEXT_PATH: ${CLICKHOUSE_CONFIG_PATH:-./}
+                LOCAL_UID: ${LOCAL_UID:-1000}
+                LOCAL_GID: ${LOCAL_GID:-1000}
         container_name: fieldsets-store
         hostname: fieldsets-store
         cap_add:
@@ -23,7 +25,7 @@ services:
             CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
             CLICKHOUSE_ALWAYS_RUN_INITDB_SCRIPTS: 1
             CLICKHOUSE_HOST: ${CLICKHOUSE_HOST:-172.28.0.5}
-            CLICKHOUSE_USER: ${CLICKHOUSE_USER:-default}
+            CLICKHOUSE_USER: ${CLICKHOUSE_USER:-fieldsets}
             CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-fieldsets}
             CLICKHOUSE_DB: ${CLICKHOUSE_DB:-fieldsets}
             POSTGRES_USER: ${POSTGRES_USER:-postgres}
